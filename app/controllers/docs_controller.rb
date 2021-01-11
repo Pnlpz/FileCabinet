@@ -25,10 +25,13 @@ class DocsController < ApplicationController
     end
 
     def update 
-        if @doc.save(doc_params)
-            redirect_to @doc
-        else
-            render 'edit'
+        
+        respond_to do |format|
+            if @doc.update(doc_params)
+                format.html { redirect_to @doc, notice: 'Doc updated successfully' } 
+            else
+                format.html { redirect_to render 'edit', alert: 'Try again later'}
+            end
         end
     end
 
